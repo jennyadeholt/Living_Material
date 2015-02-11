@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="new_search">Ny sökning</string>
+    <string name="search_result_header">Sökning</string>
+    <string name="search_result_header_2">Info</string>
+    <string name="search_result">Sökresultat</string>
+    <string name="update_search">Kör sökning</string>
+    <string name="map_result">Karta</string>
+    <string name="favorites">Favoriter</string>
+    <string name="settings">Inställningar</string>
+    <string name="images">Bilder</string>
+    <string name="detail_view">Detaljer</string>
+    <string name="searches">Sökhistorik</string>
+    <string name="help">Hjälp</string>
+    <string name="about">Om</string>
+
+    <string name="preferences_area_title">Område</string>
+    <string name="preferences_area">Sökområde</string>
+
+    <string name="preferences_amount">Kostnad</string>
+    <string name="preferences_amount_min">Lägsta pris</string>
+    <string name="preferences_amount_max">Högsta pris</string>
+    <string name="preferences_rent_max">Max hyra</string>
+
+    <string name="preferences_location_hint">Sökområde</string>
+    <string name="preferences_amount_hint">Summa</string>
+
+    <string name="preferences_type_of_building_title">Byggnad</string>
+
+    <string name="preferences_type_of_building">Bostadstyp</string>
+    <string name="building_type_house">Villa</string>
+    <string name="building_type_appartment">Lägenhet</string>
+    <string name="building_type_complex">Radhus, parhus &amp; kedjehus</string>
+    <string name="building_type_fritid">Fritidshus</string>
+    <string name="building_type_mark">Tomt-mark</string>
+    <string name="building_type_farm">Gård</string>
+
+    <string name="preferences_type_of_production">Nyproduktion</string>
+    <string name="building_new">Visa endast nyproduktion</string>
+    <string name="building_old">Visa inte nyproduktion</string>
+    <string name="building">Visa allt</string>
+
+    <string name="preferences_type_of_object">Status</string>
+    <string name="building_on_sale">Till salu</string>
+    <string name="building_sold">Sålda</string>
+
+    <string name="preferences_nbr_of_rooms">Antal rum</string>
+    <string name="preferences_nbr_of_rooms_min">Minst antal rum</string>
+    <string name="preferences_nbr_of_rooms_max">Max antal rum</string>
+
+    <string name="number_of_objects">%1$d av %2$d visas</string>
+
+    <string name="details_adress">Adress</string>
+    <string name="details_type">Bostadstyp</string>
+    <string name="details_rent">Hyra</string>
+    <string name="details_list_price">Begärt pris</string>
+    <string name="details_sold_price">Såld för</string>
+    <string name="details_rooms">Antal rum</string>
+    <string name="details_floor">Våning</string>
+    <string name="details_plot_area">Tomt</string>
+    <string name="details_living_area">Boyta</string>
+    <string name="details_published">Publiserad</string>
+    <string name="details_sold">Såldes</string>
+    <string name="details_sold_after">%1$s efter %2$s</string>
+    <string name="details_construction_year">Byggnadsår</string>
+    <string name="details_source">Källa</string>
+
+    <string name="details_living_area_text">%1$d kvm</string>
+    <string name="details_plot_area_text">%1$s kvm</string>
+    <string name="details_room_text">%1$s rum</string>
+    <string name="details_floor_text">%1$d våningen</string>
+
+    <string name="dialog_update_search_title">Updatera sökning</string>
+    <string name="dialog_update_search_text">Kör sökningen en gång till?</string>
+    <string name="preferences_launch_search">Sök</string>
+    <string name="preferences_clear_search">Rensa</string>
+    <string name="action_delete_favorite">Rensa favorit</string>
+    <string name="action_delete_all_favorite">Rensa alla favoriter</string>
+    <string name="action_delete_history">Ta bort</string>
+    <string name="action_view_details">Visa detaljer</string>
+    <string name="action_delete_all_history">Rensa all historik</string>
+    <string name="action_save_search">Bevaka</string>
+
+    <string name="days_available_zero">Idag</string>
+
+    <string-array name="sort_strings">
+        <item>Publiserad</item>
+        <item>Adress</item>
+        <item>Pris</item>
+        <item>Boyta</item>
+        <item>Område</item>
+    </string-array>
+
+    <string-array name="sort_order_strings">
+        <item>Stigande</item>
+        <item>Fallande</item>
+    </string-array>
+
+    <plurals name="daysAvailable">
+        <item quantity="zero">Idag</item>
+        <item quantity="one">Igår</item>
+        <item quantity="two">Iförregår</item>
+        <item quantity="other">%d dagar sedan</item>
+    </plurals>
+
+    <plurals name="daysPublished">
+        <item quantity="one">1 dag </item>
+        <item quantity="other">%d dagar</item>
+    </plurals>
+    <string name="settings_button_text">Inställningar</string>
+    <string name="title_activity_main">Material</string>
+    <string name="toast_added_favorite">Favorit tillagd</string>
+    <string name="toast_removed_favorite">Favorit borttagen</string>
+
+</resources>

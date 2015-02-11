@@ -1,0 +1,194 @@
+<resources>
+
+    <string name="title_activity_main">Material</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_info">Info</string>
+
+    <string name="app_name">Living</string>
+
+
+    <string name="toast_added_favorite">Favorite added</string>
+    <string name="toast_removed_favorite">Favorite removed</string>
+
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Save title</string>
+    <string name="settings_button_text">Settings</string>
+
+    <string name="new_search">New search</string>
+    <string name="search_result_header">Search</string>
+    <string name="search_result_header_2">Info</string>
+    <string name="search_result">Search result</string>
+    <string name="update_search">Run search</string>
+    <string name="map_result">Map</string>
+    <string name="favorites">Favorites</string>
+    <string name="settings">Settings</string>
+    <string name="images">Images</string>
+    <string name="homepage">Homepage</string>
+    <string name="detail_view">Detail view</string>
+    <string name="searches">Old searches</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="app_not_available">Sorry, there\'s no web browser available</string>
+
+    <string name="preferences_type_of_object">Status</string>
+    <string name="building_on_sale">For sale</string>
+    <string name="building_sold">Sold</string>
+
+    <string name="preferences_type_of_building_title">Building type</string>
+    <string name="preferences_type_of_building">Building types:</string>
+
+    <string-array name="building">
+        <item>@string/building_type_house</item>
+        <item>@string/building_type_appartment</item>
+        <item>@string/building_type_complex</item>
+        <item>@string/building_type_fritid</item>
+        <item>@string/building_type_mark</item>
+        <item>@string/building_type_farm</item>
+    </string-array>
+
+    <string-array name="building_types">
+        <item>villa</item>
+        <item>lägenhet</item>
+        <item>radhus, parhus, kedjehus</item>
+        <item>fritidshus</item>
+        <item>tomt-mark</item>
+        <item>gård</item>
+    </string-array>
+
+    <string-array name="build_types_strings">
+        <item>@string/building</item>
+        <item>@string/building_new</item>
+        <item>@string/building_old</item>
+    </string-array>
+
+    <string-array name="build_object_strings">
+        <item>@string/building_on_sale</item>
+        <item>@string/building_sold</item>
+    </string-array>
+
+    <string-array name="build_types">
+        <item>null</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+
+    <string-array name="sort_types">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="sort_types_strings">
+        <item>Published</item>
+        <item>Address</item>
+        <item>Price</item>
+        <item>Area</item>
+        <item>Number of rooms</item>
+    </string-array>
+
+    <string-array name="sort_order_types">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="sort_order_strings">
+        <item>Stigande</item>
+        <item>Fallande</item>
+    </string-array>
+
+    <string-array name="build_object">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string-array name="rooms">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5+</item>
+    </string-array>
+
+    <string-array name="rooms_number">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string name="building_type_none">Inget valt</string>
+    <string name="building_type_house">Villa</string>
+    <string name="building_type_appartment">Lägenhet</string>
+    <string name="building_type_complex">Radhus, parhus &amp; kedjehus</string>
+    <string name="building_type_fritid">Fritidshus</string>
+    <string name="building_type_mark">Tomt-mark</string>
+    <string name="building_type_farm">Gård</string>
+
+    <string name="details_adress">Adress:</string>
+    <string name="details_type">Type:</string>
+    <string name="details_rent">Rent:</string>
+    <string name="details_list_price">Price:</string>
+    <string name="details_rooms">Rooms:</string>
+    <string name="details_area">Area:</string>
+    <string name="details_living_area">Living area:</string>
+    <string name="details_published">Published:</string>
+    <string name="details_construction_year">Construction year:</string>
+    <string name="details_source">Source:</string>
+
+    <string name="dialog_update_search_title">Run search</string>
+    <string name="dialog_update_search_text">Run the search once more?</string>
+    <string name="preferences_launch_search">Search</string>
+    <string name="preferences_clear_search">Clear</string>
+
+    <string name="action_delete_history">Delete</string>
+    <string name="action_view_details">View details</string>
+    <string name="action_websearch">Web search</string>
+
+    <plurals name="daysAvailable">
+        <item quantity="zero">Today</item>
+        <item quantity="one">One day ago</item>
+        <item quantity="two">%d days ago</item>
+        <item quantity="other">%d days ago</item>
+    </plurals>
+
+    <string name="about">About</string>
+    <string name="action_delete_all_favorite">Delete all favorites</string>
+    <string name="action_delete_all_history">Delete all history</string>
+    <string name="action_delete_favorite">Delete favorite</string>
+    <string name="action_save_search">Save search</string>
+    <string name="building">View all</string>
+    <string name="building_new">View only new productions</string>
+    <string name="building_old">Don´t show new productions</string>
+    <string name="days_available_zero">Today</string>
+    <string name="details_floor">Floor</string>
+    <string name="details_floor_text">%1$d floor</string>
+    <string name="details_living_area_text">%1$d living area</string>
+    <string name="details_plot_area">Area</string>
+    <string name="details_plot_area_text">%1$s plot area</string>
+    <string name="details_room_text">%1$s rooms</string>
+    <string name="details_sold">Sold</string>
+    <string name="details_sold_after">%1$s after %2$s</string>
+    <string name="details_sold_price">Price</string>
+    <string name="help">Help</string>
+    <string name="number_of_objects">%1$d of %2$d are shown</string>
+    <string name="preferences_amount">Cost</string>
+    <string name="preferences_amount_hint">Price</string>
+    <string name="preferences_amount_max">Highest price</string>
+    <string name="preferences_amount_min">Lowest price</string>
+    <string name="preferences_area">Search area</string>
+    <string name="preferences_area_title">Area</string>
+    <string name="preferences_location_hint">Search area</string>
+    <string name="preferences_nbr_of_rooms">Number of rooms</string>
+    <string name="preferences_nbr_of_rooms_max">Max number of rooms</string>
+    <string name="preferences_nbr_of_rooms_min">Min number of rooms</string>
+    <string name="preferences_rent_max">Max rent</string>
+    <string name="preferences_type_of_production">New production</string>
+
+</resources>
