@@ -22,14 +22,12 @@ public abstract class AbstractListAdapter<V, K extends RecyclerView.ViewHolder> 
     }
 
     public void setData(final List<V> data) {
-        // Remove all deleted items.
         for (int i = mData.size() - 1; i >= 0; --i) {
             if (getLocation(data, mData.get(i)) < 0) {
                 deleteEntity(i);
             }
         }
 
-        // Add and move items.
         for (int i = 0; i < data.size(); ++i) {
             V entity = data.get(i);
             int loc = getLocation(mData, entity);
