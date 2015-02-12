@@ -2,21 +2,14 @@ package com.jd.living.screen.drawer;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jd.living.LivingApplication;
-import com.jd.living.database.DatabaseHelper;
-import com.jd.living.help.AbstractListAdapter;
 import com.jd.living.R;
-import com.jd.living.model.Listing;
-
-import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EBean;
+import com.jd.living.help.AbstractListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +17,10 @@ import java.util.List;
 
 public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.DrawerMenuItem,
         DrawerMenuAdapter.DrawerMenuViewHolder> {
+
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_ICON = 1;
+    private static final int TYPE_SETTING = 2;
 
     private LayoutInflater mInflater;
     private DrawerMenuListener mDrawerMenuListener;
@@ -35,16 +32,16 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
         this.mContext = context;
 
         items = new ArrayList<>();
-        items.add(new DrawerMenuItem(R.drawable.action_search, R.string.search_result, 1));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_add, R.string.new_search, 2));
+        items.add(new DrawerMenuItem(0, R.string.app_name, 1));
+        items.add(new DrawerMenuItem(R.drawable.action_search, R.string.search_result, 2));
+        items.add(new DrawerMenuItem(R.drawable.ic_menu_add, R.string.new_search, 3));
         //items.add(new DrawerMenuItem(R.drawable.ic_menu_mapmode, R.string.map_result));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_archive, R.string.searches, 3));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_star, R.string.favorites, 4));
+        items.add(new DrawerMenuItem(R.drawable.ic_menu_archive, R.string.searches, 4));
+        items.add(new DrawerMenuItem(R.drawable.ic_menu_star, R.string.favorites, 5));
         //items.add(new DrawerMenuItem(R.drawable.action_search, R.string.detail_view));
         //items.add(new DrawerMenuItem(R.drawable.ic_menu_camera, R.string.images));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_preferences, R.string.settings, 5));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_help, R.string.help, 6));
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_attachment, R.string.about, 7));
+        items.add(new DrawerMenuItem(R.string.settings, 6));
+        items.add(new DrawerMenuItem(R.string.help, 7));
 
         setData(items);
         setHasStableIds(true);
@@ -53,8 +50,13 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
 
     @Override
     public DrawerMenuViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        return new DrawerMenuViewHolder(mInflater.inflate(R.layout.drawer_menu_item, viewGroup, false)
-        );
+        if (viewType == TYPE_HEADER) {
+            return new DrawerMenuViewHolder(mInflater.inflate(R.layout.drawer_menu_header, viewGroup, false), viewType);
+        } else if (viewType == TYPE_ICON) {
+            return new DrawerMenuViewHolder(mInflater.inflate(R.layout.drawer_menu_item_icon, viewGroup, false), viewType);
+        } else {
+            return new DrawerMenuViewHolder(mInflater.inflate(R.layout.drawer_menu_item, viewGroup, false), viewType);
+        }
     }
 
     @Override
@@ -74,6 +76,10 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
     public class DrawerMenuItem {
         private final int mIconResourceId;
         private final String mLabel;
+
+        public DrawerMenuItem(int labelResourceId, int itemId) {
+            this(0, labelResourceId, itemId);
+        }
 
         public DrawerMenuItem(int iconResourceId, int labelResourceId, int itemId) {
             mIconResourceId = iconResourceId;
@@ -113,17 +119,42 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
         }
     }
 
-    public class DrawerMenuViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView mIcon;
-        private final TextView mLabel;
+    // Witht the following method we check what type of view is being passed
+    @Override
+    public int getItemViewType(int position) {
+        super.getItemViewType(position);
+        if (position == 0) {
+            return TYPE_HEADER;
+        } else if (items.get(position).getIconResourceId() == 0) {
+            return TYPE_SETTING;
+        } else {
+            return TYPE_ICON;
+        }
+    }
+
+    protected class DrawerMenuViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView mLabel;
+        private ImageView mIcon;
+
+        private int viewType;
 
         private int mPosition;
         private DrawerMenuItem mMenuItem;
 
-        public DrawerMenuViewHolder(View itemView) {
+        public DrawerMenuViewHolder(View itemView, int viewType) {
             super(itemView);
-            mIcon = (ImageView) itemView.findViewById(R.id.icon);
-            mLabel = (TextView) itemView.findViewById(R.id.label);
+
+            this.viewType = viewType;
+
+            if (viewType == TYPE_HEADER) {
+
+            } else {
+                mLabel = (TextView) itemView.findViewById(R.id.label);
+                if (viewType == TYPE_ICON) {
+                    mIcon = (ImageView) itemView.findViewById(R.id.icon);
+                }
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,8 +169,13 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
         public void bind(int position, DrawerMenuItem item) {
             mPosition = position;
             mMenuItem = item;
-            mIcon.setImageResource(item.getIconResourceId());
-            mLabel.setText(item.getLabel());
+
+            if (mLabel != null) {
+                mLabel.setText(item.getLabel());
+                if (mIcon != null) {
+                    mIcon.setImageResource(item.getIconResourceId());
+                }
+            }
         }
     }
 }

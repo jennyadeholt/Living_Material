@@ -176,7 +176,7 @@
     <string name="details_sold">Sold</string>
     <string name="details_sold_after">%1$s after %2$s</string>
     <string name="details_sold_price">Price</string>
-    <string name="help">Help</string>
+    <string name="help">Help &amp; feedback</string>
     <string name="number_of_objects">%1$d of %2$d are shown</string>
     <string name="number_of_searches">%1$d searches</string>
     <string name="number_of_favorites">%1$d favoriter</string>

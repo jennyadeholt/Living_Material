@@ -60,6 +60,8 @@ dependencies {
 
     compile 'com.google.code.gson:gson:2.3.1'
 
+    compile 'de.hdodenhof:circleimageview:1.2.1'
+
     compile 'org.springframework.android:spring-android-rest-template:2.0.0.M1'
 
     apt "org.androidannotations:androidannotations:$AAVersion"
