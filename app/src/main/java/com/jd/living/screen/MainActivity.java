@@ -79,19 +79,19 @@ public class MainActivity extends ActionBarActivity implements NavigationFragmen
     public void onMenuItemClicked(int pos, DrawerMenuAdapter.DrawerMenuItem item) {
         Fragment fragment = null;
         switch (pos) {
-            case 0:
+            case 1:
                 fragment = new NewSearch_();
                 break;
-            case 1:
+            case 2:
                 fragment = new SearchPreferencesFragment_();
                 break;
-            case 2:
+            case 3:
                 fragment = new HistoryList_();
                 break;
-            case 3:
+            case 4:
                 fragment = new Favorites_();
                 break;
-            case 4:
+            case 5:
                 fragment = new SettingsPreferenceFragment_();
             default:
                 break;
@@ -114,7 +114,7 @@ public class MainActivity extends ActionBarActivity implements NavigationFragmen
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                navigationFragment.onUpdate(0);
+                navigationFragment.onUpdate(1);
             }
         });
     }
