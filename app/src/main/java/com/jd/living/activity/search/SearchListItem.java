@@ -20,6 +20,8 @@ import org.androidannotations.annotations.ViewById;
 import java.io.InputStream;
 import java.net.URL;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 @EViewGroup(R.layout.list_item)
 public class SearchListItem extends LinearLayout {
 
@@ -30,13 +32,10 @@ public class SearchListItem extends LinearLayout {
     TextView info;
 
     @ViewById
-    TextView area;
-
-    @ViewById
     TextView price;
 
     @ViewById
-    ImageView image;
+    CircleImageView image;
 
     @ViewById
     ImageView favorite;
@@ -54,8 +53,7 @@ public class SearchListItem extends LinearLayout {
     public void bind(Listing listing) {
         this.listing = listing;
 
-        address.setText(listing.getAddress());
-        area.setText(listing.getArea());
+        address.setText(listing.getAddress() + ", " + listing.getArea());
 
         String listPrice = listing.getListPrice();
 

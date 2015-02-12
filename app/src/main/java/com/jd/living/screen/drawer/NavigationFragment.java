@@ -35,13 +35,9 @@ public class NavigationFragment extends Fragment {
     private boolean firstResume = false;
 
     private DrawerMenuListener mDrawerMenuListener;
-    DrawerMenuAdapter adapter;
+    private DrawerMenuAdapter adapter;
 
     private int oldItemId;
-
-    public NavigationFragment() {
-
-    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -83,6 +79,10 @@ public class NavigationFragment extends Fragment {
         }
 
         firstResume = false;
+    }
+
+    public void onUpdate(int position) {
+        onUpdate(position, adapter.getItem(position));
     }
 
     public void setUp(int drawerViewId, DrawerLayout drawerLayout, Toolbar toolbar) {
@@ -131,11 +131,6 @@ public class NavigationFragment extends Fragment {
         editor.putBoolean(PREF_KEY, learned).apply();
 
         mIsLearned = learned;
-    }
-
-
-    public void onUpdate(int position) {
-        onUpdate(position, adapter.getItem(position));
     }
 
     private void onUpdate(int position, DrawerMenuAdapter.DrawerMenuItem item) {
