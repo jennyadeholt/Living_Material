@@ -112,5 +112,8 @@
     <string name="title_activity_main">Material</string>
     <string name="toast_added_favorite">Favorit tillagd</string>
     <string name="toast_removed_favorite">Favorit borttagen</string>
+    <string name="details_area">Area:</string>
+    <string name="add_to_favorites">Lägg till favorit</string>
+    <string name="remove_from_favorites">Ta bort favorit</string>
 
 </resources>

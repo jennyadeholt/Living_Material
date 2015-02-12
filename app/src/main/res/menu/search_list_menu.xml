@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:icon="@drawable/ic_menu_search"
+            android:id="@+id/action_view"
+            android:title="@string/action_view_details" />
+    <item
+            android:icon="@drawable/ic_menu_star"
+            android:id="@+id/action_add"
+            android:title="@string/add_to_favorites" />
+    <item
+            android:icon="@drawable/ic_menu_star"
+            android:id="@+id/action_remove"
+            android:title="@string/remove_from_favorites" />
+</menu>

@@ -1,41 +1,61 @@
 package com.jd.living.screen;
 
 import android.os.Bundle;
+import android.preference.PreferenceScreen;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+
 import android.widget.Toast;
 
 import com.jd.living.R;
+import com.jd.living.activity.history.HistoryList_;
+import com.jd.living.activity.search.Favorites_;
+import com.jd.living.activity.search.NewSearch_;
+import com.jd.living.activity.settings.SearchPreferencesFragment_;
+import com.jd.living.activity.settings.SettingsPreferenceFragment_;
+import com.jd.living.database.DatabaseHelper;
+import com.jd.living.model.Listing;
 import com.jd.living.screen.drawer.DrawerMenuAdapter;
 import com.jd.living.screen.drawer.NavigationFragment;
 
+import com.jd.living.activity.settings.PreferenceFragment.OnPreferenceAttachedListener;
 
-public class MainActivity extends ActionBarActivity implements NavigationFragment.DrawerMenuListener {
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EActivity;
+
+import java.util.List;
+
+@EActivity
+public class MainActivity extends ActionBarActivity implements NavigationFragment.DrawerMenuListener,
+        OnPreferenceAttachedListener, DatabaseHelper.SearchDatabaseListener {
+
+    @Bean
+    DatabaseHelper database;
+
+    NavigationFragment navigationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            NavigationFragment navigationFragment = (NavigationFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.navigation_fragment);
+            navigationFragment = (NavigationFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.navigation_fragment);
 
-            navigationFragment.setUp(R.id.navigation_fragment,
+            navigationFragment.setUp(
+                    R.id.navigation_fragment,
                     (DrawerLayout) findViewById(R.id.drawer_layout),
                     toolbar);
         }
+        database.addDatabaseListener(this);
     }
 
     @Override
@@ -57,37 +77,60 @@ public class MainActivity extends ActionBarActivity implements NavigationFragmen
 
     @Override
     public void onMenuItemClicked(int pos, DrawerMenuAdapter.DrawerMenuItem item) {
-        Fragment fragment = new PlanetFragment();
-        Bundle args = new Bundle();
-        args.putString(PlanetFragment.TEXT, item.getLabel());
-        args.putInt(PlanetFragment.IMAGE_RESOURCE, item.getIconResourceId());
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        setTitle(" " + pos);
-    }
-
-    /**
-     * Fragment that appears in the "content_frame", shows a planet
-     */
-    public static class PlanetFragment extends Fragment {
-        public static final String TEXT = "text";
-        public static final String IMAGE_RESOURCE = "image_resource";
-
-        public PlanetFragment() {
-            // Empty constructor required for fragment subclasses
+        Fragment fragment = null;
+        switch (pos) {
+            case 0:
+                fragment = new NewSearch_();
+                break;
+            case 1:
+                fragment = new SearchPreferencesFragment_();
+                break;
+            case 2:
+                fragment = new HistoryList_();
+                break;
+            case 3:
+                fragment = new Favorites_();
+                break;
+            case 4:
+                fragment = new SettingsPreferenceFragment_();
+            default:
+                break;
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_planet, container, false);
-            int imageResource = getArguments().getInt(IMAGE_RESOURCE);
-            String text = getArguments().getString(TEXT);
-            ((ImageView) rootView.findViewById(R.id.image)).setImageResource(imageResource);
-            getActivity().setTitle(text);
-            return rootView;
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commitAllowingStateLoss();
         }
+        setTitle(item.getLabel());
     }
 
+    @Override
+    public void onPreferenceAttached(PreferenceScreen root, int xmlId) {
+
+    }
+
+    @Override
+    public void onUpdate(List<Listing> result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                navigationFragment.onUpdate(0);
+            }
+        });
+    }
+
+    @Override
+    public void onSearchStarted() {
+
+    }
+
+    @Override
+    public void onDetailsRequested(int booliId) {
+
+    }
+
+    @Override
+    public void onFavoriteUpdated() {
+
+    }
 }

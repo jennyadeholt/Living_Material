@@ -35,6 +35,9 @@ public class NavigationFragment extends Fragment {
     private boolean firstResume = false;
 
     private DrawerMenuListener mDrawerMenuListener;
+    DrawerMenuAdapter adapter;
+
+    private int oldItemId;
 
     public NavigationFragment() {
 
@@ -75,7 +78,7 @@ public class NavigationFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (firstResume && mIsLearned) {
+        if (firstResume && !mIsLearned) {
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
 
@@ -104,26 +107,16 @@ public class NavigationFragment extends Fragment {
         return new LinearLayoutManager(getActivity());
     }
 
-    private int oldItemId;
-
     private DrawerMenuAdapter getDrawerMenuAdapter() {
-        final DrawerMenuAdapter adapter = new DrawerMenuAdapter(getActivity());
-        adapter.setDrawerMenuListener(new DrawerMenuAdapter.DrawerMenuListener() {
-            @Override
-            public void onMenuItemClicked(int position, DrawerMenuAdapter.DrawerMenuItem item) {
-                if (mDrawerMenuListener != null) {
-                    mDrawerMenuListener.onMenuItemClicked(position, item);
-                    RecyclerView.ViewHolder oldViewHolder = mRecyclerView.findViewHolderForPosition(oldItemId);
-                    if (oldViewHolder != null) {
-                        oldViewHolder.itemView.setSelected(false);
-                    }
-                    RecyclerView.ViewHolder newViewHolder = mRecyclerView.findViewHolderForPosition(position);
-                    newViewHolder.itemView.setSelected(true);
-                    oldItemId = position;
-                    mDrawerLayout.closeDrawer(mDrawerView);
+        if (adapter == null ) {
+            adapter = new DrawerMenuAdapter(getActivity());
+            adapter.setDrawerMenuListener(new DrawerMenuAdapter.DrawerMenuListener() {
+                @Override
+                public void onMenuItemClicked(int position, DrawerMenuAdapter.DrawerMenuItem item) {
+                    onUpdate(position, item);
                 }
-            }
-        });
+            });
+        }
 
         return adapter;
     }
@@ -139,6 +132,28 @@ public class NavigationFragment extends Fragment {
 
         mIsLearned = learned;
     }
+
+
+    public void onUpdate(int position) {
+        onUpdate(position, adapter.getItem(position));
+    }
+
+    private void onUpdate(int position, DrawerMenuAdapter.DrawerMenuItem item) {
+        if (mDrawerMenuListener != null) {
+            mDrawerMenuListener.onMenuItemClicked(position, item);
+        }
+        RecyclerView.ViewHolder oldViewHolder = mRecyclerView.findViewHolderForPosition(oldItemId);
+        if (oldViewHolder != null) {
+            oldViewHolder.itemView.setSelected(false);
+        }
+        RecyclerView.ViewHolder newViewHolder = mRecyclerView.findViewHolderForPosition(position);
+        if (newViewHolder != null) {
+            newViewHolder.itemView.setSelected(true);
+        }
+        oldItemId = position;
+        mDrawerLayout.closeDrawer(mDrawerView);
+    }
+
 
     private class Toggle extends ActionBarDrawerToggle {
         public Toggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes) {

@@ -2,31 +2,41 @@ package com.jd.living.screen.drawer;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jd.living.LivingApplication;
+import com.jd.living.database.DatabaseHelper;
 import com.jd.living.help.AbstractListAdapter;
 import com.jd.living.R;
+import com.jd.living.model.Listing;
+
+import org.androidannotations.annotations.Bean;
+import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.DrawerMenuItem, DrawerMenuAdapter.DrawerMenuViewHolder> {
+
+public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.DrawerMenuItem,
+        DrawerMenuAdapter.DrawerMenuViewHolder> {
 
     private LayoutInflater mInflater;
     private DrawerMenuListener mDrawerMenuListener;
     private Context mContext;
 
-    public DrawerMenuAdapter(Context context) {
+    private List<DrawerMenuItem> items;
 
+    public DrawerMenuAdapter(Context context) {
         this.mContext = context;
 
-        List<DrawerMenuItem> items = new ArrayList<>();
-        items.add(new DrawerMenuItem(R.drawable.ic_menu_add, R.string.new_search, 1));
-        items.add(new DrawerMenuItem(R.drawable.action_search, R.string.search_result, 2));
+        items = new ArrayList<>();
+        items.add(new DrawerMenuItem(R.drawable.action_search, R.string.search_result, 1));
+        items.add(new DrawerMenuItem(R.drawable.ic_menu_add, R.string.new_search, 2));
         //items.add(new DrawerMenuItem(R.drawable.ic_menu_mapmode, R.string.map_result));
         items.add(new DrawerMenuItem(R.drawable.ic_menu_archive, R.string.searches, 3));
         items.add(new DrawerMenuItem(R.drawable.ic_menu_star, R.string.favorites, 4));
@@ -36,10 +46,8 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
         items.add(new DrawerMenuItem(R.drawable.ic_menu_help, R.string.help, 6));
         items.add(new DrawerMenuItem(R.drawable.ic_menu_attachment, R.string.about, 7));
 
-
         setData(items);
         setHasStableIds(true);
-
         mInflater = LayoutInflater.from(context);
     }
 

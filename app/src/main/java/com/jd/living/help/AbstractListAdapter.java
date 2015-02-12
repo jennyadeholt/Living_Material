@@ -21,6 +21,10 @@ public abstract class AbstractListAdapter<V, K extends RecyclerView.ViewHolder> 
         return mData.size();
     }
 
+    public V getItem(int position) {
+        return mData.get(0);
+    }
+
     public void setData(final List<V> data) {
         for (int i = mData.size() - 1; i >= 0; --i) {
             if (getLocation(data, mData.get(i)) < 0) {

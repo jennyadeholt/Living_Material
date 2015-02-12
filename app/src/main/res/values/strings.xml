@@ -178,6 +178,8 @@
     <string name="details_sold_price">Price</string>
     <string name="help">Help</string>
     <string name="number_of_objects">%1$d of %2$d are shown</string>
+    <string name="number_of_searches">%1$d searches</string>
+    <string name="number_of_favorites">%1$d favoriter</string>
     <string name="preferences_amount">Cost</string>
     <string name="preferences_amount_hint">Price</string>
     <string name="preferences_amount_max">Highest price</string>
@@ -190,5 +192,7 @@
     <string name="preferences_nbr_of_rooms_min">Min number of rooms</string>
     <string name="preferences_rent_max">Max rent</string>
     <string name="preferences_type_of_production">New production</string>
+    <string name="remove_from_favorites">Remove from Favorites</string>
+    <string name="add_to_favorites">Add to Favorites</string>
 
 </resources>
