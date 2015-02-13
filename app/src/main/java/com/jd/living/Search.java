@@ -57,14 +57,14 @@ public class Search {
         editor.putString(SearchPreferenceKey.PREFERENCE_LOCATION, searchHistory.getLocation());
         editor.putString(SearchPreferenceKey.PREFERENCE_BUILD_TYPE, searchHistory.getProduction());
         editor.putString(SearchPreferenceKey.PREFERENCE_OBJECT_TYPE, searchHistory.isSold() ? "1" : "0");
-        editor.commit();
+        editor.apply();
     }
 
     public String getTypes() {
         Set<String> buildTypes = preferences.getStringSet(SearchPreferenceKey.PREFERENCE_BUILDING_TYPE, new HashSet<String>());
         String types = "";
 
-        for (String type : buildTypes.toArray(new String[]{})) {
+        for (String type : buildTypes.toArray(new String[buildTypes.size()])) {
             types = types + type + ", ";
         }
 

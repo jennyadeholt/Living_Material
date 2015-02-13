@@ -18,8 +18,9 @@
             android:layout_height="wrap_content"
             android:elevation="4dp"
             android:paddingTop="@dimen/tool_bar_top_padding"
-            android:layout_alignParentTop="true"
-            android:background="?attr/colorPrimaryDark" />
+            app:theme="@style/Toolbar"
+            app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:background="@color/primary_dark" />
 
         <FrameLayout
             android:id="@+id/content_frame"

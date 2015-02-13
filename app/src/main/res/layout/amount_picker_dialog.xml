@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<AutoCompleteTextView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:paddingTop="24dp">
+
+    <AutoCompleteTextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:completionThreshold="1"
-        android:maxLength="15"
+        android:dropDownHeight="150dp"
         android:hint="@string/preferences_amount_hint"
         android:inputType="number"
-        android:dropDownHeight="150dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <requestFocus />
-</AutoCompleteTextView>
+        android:maxLength="15">
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+</FrameLayout>
 

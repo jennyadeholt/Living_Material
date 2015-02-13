@@ -84,14 +84,8 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements F
         HttpURLConnection conn = null;
         StringBuilder jsonResults = new StringBuilder();
         try {
-            StringBuilder sb = new StringBuilder(API_BASE);
-            sb.append("?q=" + URLEncoder.encode(search, "utf-8"));
-            sb.append("&callerId=" + authStore.getCallerId());
-            sb.append("&time=" + authStore.getTime());
-            sb.append("&unique=" + authStore.getUnique());
-            sb.append("&hash=" + authStore.getHash());
 
-            URL url = new URL(sb.toString());
+            URL url = new URL(API_BASE + "?q=" + URLEncoder.encode(search, "utf-8") + "&callerId=" + authStore.getCallerId() + "&time=" + authStore.getTime() + "&unique=" + authStore.getUnique() + "&hash=" + authStore.getHash());
 
             conn = (HttpURLConnection) url.openConnection();
             conn.addRequestProperty("Accept:" , "application/vnd.booli-v2+json");
@@ -141,13 +135,8 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements F
         HttpURLConnection conn = null;
         StringBuilder jsonResults = new StringBuilder();
         try {
-            StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
-            sb.append("?sensor=false&key=" + API_KEY);
-            sb.append("&components=country:se");
-            sb.append("&language=sv");
-            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
 
-            URL url = new URL(sb.toString());
+            URL url = new URL(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON + "?sensor=false&key=" + API_KEY + "&components=country:se" + "&language=sv" + "&input=" + URLEncoder.encode(input, "utf8"));
             conn = (HttpURLConnection) url.openConnection();
             InputStreamReader in = new InputStreamReader(conn.getInputStream());
 

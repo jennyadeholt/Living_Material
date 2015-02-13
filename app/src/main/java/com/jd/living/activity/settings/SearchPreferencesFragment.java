@@ -86,7 +86,7 @@ public class SearchPreferencesFragment extends PreferenceFragment implements Sha
         } else if (key.equals(SearchPreferenceKey.PREFERENCE_ROOM_MIN_NUMBERS)
                 || key.equals(SearchPreferenceKey.PREFERENCE_ROOM_MAX_NUMBERS)) {
             checkMinMax(key);
-        }  else if ( key.equals(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX)
+        } else if (key.equals(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX)
                 || key.equals(SearchPreferenceKey.PREFERENCE_AMOUNT_MIN)) {
             checkMinMaxAmount(key);
         } else if (key.equals(SearchPreferenceKey.PREFERENCE_BUILDING_TYPE)) {
@@ -106,7 +106,7 @@ public class SearchPreferencesFragment extends PreferenceFragment implements Sha
         if (min < max || min == 0 || max == 0) {
             result = true;
             setSummary(SearchPreferenceKey.PREFERENCE_AMOUNT_MIN, search.getMinAmount(false));
-            setSummary(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX, search.getMaxAmount(false) );
+            setSummary(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX, search.getMaxAmount(false));
         } else if (key.equals(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX)) {
             setSummary(SearchPreferenceKey.PREFERENCE_AMOUNT_MAX, "Max value needs to be bigger then min");
         } else if (key.equals(SearchPreferenceKey.PREFERENCE_AMOUNT_MIN)) {
@@ -174,9 +174,9 @@ public class SearchPreferencesFragment extends PreferenceFragment implements Sha
             text = "";
             String[] names = getResources().getStringArray(R.array.building);
             String[] types = getResources().getStringArray(R.array.building_types);
-            String[] selected = set.toArray(new String[] {});
+            String[] selected = set.toArray(new String[]{});
             for (String s : selected) {
-                for (int i = 0 ; i < types.length ; i ++) {
+                for (int i = 0; i < types.length; i++) {
                     if (types[i].equals(s)) {
                         text = text + names[i] + ", ";
                         break;

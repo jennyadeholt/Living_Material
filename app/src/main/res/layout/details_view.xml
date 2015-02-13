@@ -4,8 +4,7 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent"
     android:orientation="vertical"
-    android:animateLayoutChanges="true"
-    android:background="@drawable/list_item">
+    android:animateLayoutChanges="true">
 
     <RelativeLayout
         android:id="@+id/basic_info"

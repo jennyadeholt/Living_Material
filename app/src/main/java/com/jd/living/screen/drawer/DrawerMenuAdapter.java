@@ -45,6 +45,7 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
 
         setData(items);
         setHasStableIds(true);
+
         mInflater = LayoutInflater.from(context);
     }
 

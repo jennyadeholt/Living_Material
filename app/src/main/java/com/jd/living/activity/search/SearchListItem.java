@@ -58,24 +58,22 @@ public class SearchListItem extends LinearLayout {
         String listPrice = listing.getListPrice();
 
         if (listing.isSold()) {
-            listPrice = getContext().getString(R.string.details_list_price) + " " +listPrice;
+            listPrice = getContext().getString(R.string.details_list_price) + " " + listPrice;
             String soldFor = getContext().getString(R.string.details_sold_price) + " ";
             soldFor += listing.getSoldPrice();
             info.setText(soldFor);
         } else {
             String rooms = getContext().getString(R.string.details_room_text, listing.getRoomsAsString());
             String livingArea = getContext().getString(R.string.details_living_area_text, listing.getLivingArea());
-            info.setText(rooms + ", " + livingArea);
+            info.setText(rooms + ": " + livingArea);
 
             if (listing.getListPrice().equals("0")) {
-                listPrice = "N/A";
+                listPrice = "- ";
                 if (!listing.getRent().equals("0")) {
                     listPrice = listing.getRent();
                 }
-            } else {
-                if (!listing.getRent().equals("0")) {
-                    listPrice += ", " + listing.getRent();
-                }
+            } else if (!listing.getRent().equals("0")) {
+                listPrice += " / " + listing.getRent();
             }
         }
         price.setText(listPrice);
@@ -86,20 +84,17 @@ public class SearchListItem extends LinearLayout {
 
     protected void updateFavorite(boolean onTouch) {
         boolean isFavorite = database.isFavorite(listing);
-        int resId = R.drawable.btn_star_off_disabled_focused_holo_light;
+        int resId = 0;
 
         if (listing.isSold()) {
             favorite.setVisibility(View.GONE);
-        } else  {
+        } else {
             if (onTouch) {
-                if (!isFavorite) {
-                    resId = R.drawable.btn_rating_star_on_normal_holo_light;
-                }
                 database.updateFavorite(listing);
             } else if (isFavorite) {
                 resId = R.drawable.btn_rating_star_on_normal_holo_light;
             }
-            favorite.setVisibility(View.VISIBLE);
+            favorite.setVisibility(resId == 0 ? View.GONE : View.VISIBLE);
             favorite.setImageResource(resId);
         }
     }
@@ -112,7 +107,7 @@ public class SearchListItem extends LinearLayout {
             drawable = Drawable.createFromStream(is, "src name");
             is.close();
         } catch (Exception e) {
-            System.out.println("Exc="+e);
+            System.out.println("Exc=" + e);
         }
 
         setImage(drawable);
