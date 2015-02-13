@@ -3,10 +3,9 @@
     <color name="drawer_background">#FFFFFFFF</color>
     <color name="primary">#FFf8bbd0</color>
     <color name="primary_dark">#FFe91e63</color>
-    <color name="accent_color">#FF00bfa5</color>
+    <color name="accent_color">#FF34b4e3</color>
 
     <color name="dark_grey">#87000000</color>
-
 
     <color name="drawer_menu_list_item_text">@color/dark_grey</color>
     <color name="search_list_item_text">#54000000</color>

@@ -6,10 +6,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.jd.living.R;
+import com.jd.living.activity.details.FavoriteDetailsFragment_;
 import com.jd.living.database.DatabaseHelper;
+import com.jd.living.help.NavigationDrawerActivity;
 import com.jd.living.model.Listing;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
@@ -47,6 +50,13 @@ public class Favorites extends SearchList implements DatabaseHelper.FavoriteData
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @ItemClick
+    void listItemClicked(Listing listing) {
+        database.setCurrentId(listing.getBooliId(), getDataBaseState());
+        ((NavigationDrawerActivity) getActivity()).updateFragment(new FavoriteDetailsFragment_());
+    }
+
     @Override
     protected DatabaseHelper.DatabaseState getDataBaseState() {
         return DatabaseHelper.DatabaseState.FAVORITE;

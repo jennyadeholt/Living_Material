@@ -19,7 +19,6 @@ import com.jd.living.model.Listing;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -40,7 +39,6 @@ public abstract class SearchList extends ListFragment{
     SearchListAdapter searchListAdapter;
     @Bean
     FavoriteDatabase favoriteDatabase;
-
 
     @AfterViews
     public void init() {
@@ -86,11 +84,6 @@ public abstract class SearchList extends ListFragment{
             default:
                 return super.onContextItemSelected(item);
         }
-    }
-
-    @ItemClick
-    void listItemClicked(Listing listing) {
-        database.setCurrentId(listing.getBooliId(), getDataBaseState());
     }
 
     protected abstract void update(List<Listing> result);

@@ -42,16 +42,17 @@ public abstract class BooliDatabase implements BooliServer.ServerConnectionListe
     protected List<Listing> result = new ArrayList<Listing>();
 
     @AfterInject
-    public void onInit(){
+    public void onInit() {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         server.addServerConnectionListener(this);
         init();
     }
 
     protected abstract void init();
+
     public abstract void setCurrentId(int booliId);
 
-    public List<Listing> getResult(){
+    public List<Listing> getResult() {
         return result;
     }
 
@@ -62,7 +63,7 @@ public abstract class BooliDatabase implements BooliServer.ServerConnectionListe
     public Listing getListing(int booliId) {
         Listing l = null;
         for (Listing listing : getResult()) {
-            if (listing.getBooliId() == booliId ) {
+            if (listing.getBooliId() == booliId) {
                 l = listing;
                 break;
             }
@@ -71,6 +72,10 @@ public abstract class BooliDatabase implements BooliServer.ServerConnectionListe
             l = getResult().get(0);
         }
         return l;
+    }
+
+    public Listing getCurrentListing() {
+        return getListing(currentBooliId);
     }
 
     public Listing getListingBasedOnLocation(int location) {

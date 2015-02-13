@@ -1,7 +1,10 @@
 package com.jd.living.database;
 
 
+import android.content.pm.LabeledIntent;
+
 import com.jd.living.model.Listing;
+import com.jd.living.model.Result;
 import com.jd.living.model.ormlite.SearchHistory;
 
 import org.androidannotations.annotations.AfterInject;
@@ -98,6 +101,16 @@ public class DatabaseHelper implements SearchDatabase.SearchListener, FavoriteDa
         }
     }
 
+    public Listing getCurrentListing(DatabaseState state) {
+        switch (state) {
+            case SEARCH:
+                return searchDatabase.getCurrentListing();
+            case FAVORITE:
+                return favoriteDatabase.getCurrentListing();
+        }
+        return null;
+    }
+
     public Listing getListingBasedOnLocation(int objectIndex, DatabaseState state) {
         switch (state) {
             case SEARCH:
@@ -126,6 +139,16 @@ public class DatabaseHelper implements SearchDatabase.SearchListener, FavoriteDa
                 return favoriteDatabase.getListing(booliId);
         }
         return null;
+    }
+
+    public List<Listing> getResult(DatabaseState state) {
+        switch (state) {
+            case SEARCH:
+                return searchResult;
+            case FAVORITE:
+                return favoriteResult;
+        }
+        return new ArrayList<>();
     }
 
     public void launchSearch() {

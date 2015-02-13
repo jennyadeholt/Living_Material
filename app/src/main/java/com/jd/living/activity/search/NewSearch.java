@@ -2,10 +2,13 @@ package com.jd.living.activity.search;
 
 import com.jd.living.R;
 import com.jd.living.Search;
+import com.jd.living.activity.details.SearchDetailsFragment_;
 import com.jd.living.database.DatabaseHelper;
+import com.jd.living.help.NavigationDrawerActivity;
 import com.jd.living.model.Listing;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 
 import java.util.List;
@@ -41,6 +44,12 @@ public class NewSearch extends SearchList implements DatabaseHelper.SearchDataba
     public void onPause() {
         super.onPause();
         database.removeDatabaseListener(this);
+    }
+
+    @ItemClick
+    void listItemClicked(Listing listing) {
+        database.setCurrentId(listing.getBooliId(), getDataBaseState());
+        ((NavigationDrawerActivity) getActivity()).updateFragment(new SearchDetailsFragment_());
     }
 
     @Override
