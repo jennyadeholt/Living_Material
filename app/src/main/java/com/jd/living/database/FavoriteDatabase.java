@@ -17,7 +17,6 @@ public class FavoriteDatabase extends BooliDatabase {
 
     public interface FavoriteListener {
         void onUpdateFavorites();
-        void onDetailsRequestedForFavorite(int booliId);
     }
 
     private FavoriteListener favoriteListener;
@@ -38,7 +37,6 @@ public class FavoriteDatabase extends BooliDatabase {
     @Override
     public void setCurrentId(int booliId) {
         currentBooliId = booliId;
-        favoriteListener.onDetailsRequestedForFavorite(booliId);
     }
 
     public void updateFavorite(Listing listing) {

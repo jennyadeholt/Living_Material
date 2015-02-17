@@ -1,6 +1,7 @@
 package com.jd.living.activity.search;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -21,11 +22,12 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 
 @EFragment
-public abstract class SearchList extends ListFragment{
+public abstract class SearchList extends ListFragment {
 
     @ViewById
     ListView list;
@@ -39,6 +41,10 @@ public abstract class SearchList extends ListFragment{
     SearchListAdapter searchListAdapter;
     @Bean
     FavoriteDatabase favoriteDatabase;
+
+    protected abstract void update(List<Listing> result);
+
+    protected abstract DatabaseHelper.DatabaseState getDataBaseState();
 
     @AfterViews
     public void init() {
@@ -70,10 +76,10 @@ public abstract class SearchList extends ListFragment{
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int position = ( (AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
         Listing listing = database.getListingBasedOnLocation(position, getDataBaseState());
 
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_add:
             case R.id.action_remove:
                 favoriteDatabase.updateFavorite(listing);
@@ -86,8 +92,20 @@ public abstract class SearchList extends ListFragment{
         }
     }
 
-    protected abstract void update(List<Listing> result);
+    @Override
+    public void onDetach() {
+        super.onDetach();
 
-    protected abstract DatabaseHelper.DatabaseState getDataBaseState();
+        try {
+            Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+            childFragmentManager.setAccessible(true);
+            childFragmentManager.set(this, null);
+
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 

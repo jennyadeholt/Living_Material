@@ -20,12 +20,10 @@ public class SearchDatabase extends BooliDatabase {
     public interface SearchListener {
         void onUpdateSearch();
         void onSearchStarted();
-        void onDetailsRequestedForSearch(int booliId);
     }
 
     public interface SearchHistoryListener {
         void onNewSearch(Search search);
-        void onDetailsRequested(SearchHistory history);
     }
 
     private boolean searchInprogress = false;
@@ -136,6 +134,5 @@ public class SearchDatabase extends BooliDatabase {
     @Override
     public void setCurrentId(int booliId) {
         currentBooliId = booliId;
-        searchListener.onDetailsRequestedForSearch(currentBooliId);
     }
 }

@@ -85,6 +85,10 @@ public class Search {
             if (maxRooms.equals("5")) {
                 maxRooms = "";
             }
+        } else {
+            if (maxRooms.equals("")) {
+                maxRooms = "5";
+            }
         }
         return maxRooms;
     }

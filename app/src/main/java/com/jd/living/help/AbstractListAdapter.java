@@ -22,7 +22,7 @@ public abstract class AbstractListAdapter<V, K extends RecyclerView.ViewHolder> 
     }
 
     public V getItem(int position) {
-        return mData.get(0);
+        return mData.get(position);
     }
 
     public void setData(final List<V> data) {

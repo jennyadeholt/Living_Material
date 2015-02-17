@@ -1,14 +1,14 @@
 package com.jd.living.activity.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.jd.living.R;
-import com.jd.living.activity.details.FavoriteDetailsFragment_;
+import com.jd.living.activity.details.favorite.FavoriteActivity_;
 import com.jd.living.database.DatabaseHelper;
-import com.jd.living.help.NavigationDrawerActivity;
 import com.jd.living.model.Listing;
 
 import org.androidannotations.annotations.EFragment;
@@ -54,7 +54,9 @@ public class Favorites extends SearchList implements DatabaseHelper.FavoriteData
     @ItemClick
     void listItemClicked(Listing listing) {
         database.setCurrentId(listing.getBooliId(), getDataBaseState());
-        ((NavigationDrawerActivity) getActivity()).updateFragment(new FavoriteDetailsFragment_());
+
+        Intent intent = new Intent(getActivity(), FavoriteActivity_.class);
+        getActivity().startActivityForResult(intent, 0);
     }
 
     @Override
@@ -78,10 +80,5 @@ public class Favorites extends SearchList implements DatabaseHelper.FavoriteData
     public void onUpdate(List<Listing> result) {
         update(result);
         searchListAdapter.onUpdate(result);
-    }
-
-    @Override
-    public void onDetailsRequested(int booliId) {
-
     }
 }

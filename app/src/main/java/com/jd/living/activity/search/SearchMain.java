@@ -11,15 +11,18 @@ import android.view.ViewGroup;
 import com.jd.living.R;
 import com.jd.living.activity.settings.SearchPreferencesFragment_;
 
+import org.androidannotations.annotations.EFragment;
+
+@EFragment
 public class SearchMain extends Fragment {
 
-    private View mRoot;
     private FragmentTabHost mTabHost;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRoot = inflater.inflate(R.layout.tabs, null);
-        mTabHost = (FragmentTabHost) mRoot.findViewById(android.R.id.tabhost);
+        View view = inflater.inflate(R.layout.tabs, null);
+
+        mTabHost = (FragmentTabHost) view.findViewById(android.R.id.tabhost);
 
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.realtabcontent);
 
@@ -29,6 +32,11 @@ public class SearchMain extends Fragment {
         mTabHost.addTab(
                 mTabHost.newTabSpec("2").setIndicator("", getResources().getDrawable(R.drawable.tab_menu_new_search)),
                 SearchPreferencesFragment_.class, null);
-        return mRoot;
+
+        return view;
+    }
+
+    public void resetTabs() {
+        mTabHost.setCurrentTab(0);
     }
 }

@@ -1,13 +1,10 @@
 <resources>
 
-    <string name="title_activity_main">Material</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_info">Info</string>
 
     <string name="app_name">Living</string>
-
 
     <string name="toast_added_favorite">Favorite added</string>
     <string name="toast_removed_favorite">Favorite removed</string>

@@ -1,10 +1,9 @@
 package com.jd.living.database;
 
 
-import android.content.pm.LabeledIntent;
+import android.util.Log;
 
 import com.jd.living.model.Listing;
-import com.jd.living.model.Result;
 import com.jd.living.model.ormlite.SearchHistory;
 
 import org.androidannotations.annotations.AfterInject;
@@ -12,7 +11,6 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @EBean(scope = EBean.Scope.Singleton)
@@ -30,8 +28,6 @@ public class DatabaseHelper implements SearchDatabase.SearchListener, FavoriteDa
 
     public interface DatabaseListener {
         void onUpdate(List<Listing> result);
-
-        void onDetailsRequested(int booliId);
     }
 
     public interface FavoriteDatabaseListener extends DatabaseListener {
@@ -178,16 +174,6 @@ public class DatabaseHelper implements SearchDatabase.SearchListener, FavoriteDa
         }
     }
 
-    @Override
-    public void onDetailsRequestedForFavorite(int booliId) {
-        onDetailsRequested(DatabaseState.FAVORITE, booliId);
-    }
-
-    @Override
-    public void onDetailsRequestedForSearch(int booliId) {
-        onDetailsRequested(DatabaseState.SEARCH, booliId);
-    }
-
     public FavoriteDatabase getFavoriteDatabase() {
         return favoriteDatabase;
     }
@@ -219,13 +205,6 @@ public class DatabaseHelper implements SearchDatabase.SearchListener, FavoriteDa
             default:
                 break;
         }
-    }
-
-    private void onDetailsRequested(DatabaseState state, int booliId) {
-        if (state == DatabaseState.FAVORITE)
-            for (FavoriteDatabaseListener listener : favoriteDatabaseListeners) {
-                listener.onDetailsRequested(booliId);
-            }
     }
 }
 

@@ -58,11 +58,6 @@ public class SearchHistoryDatabase implements SearchDatabase.SearchHistoryListen
         }
     }
 
-    @Override
-    public void onDetailsRequested(SearchHistory history) {
-
-    }
-
     public void registerSearchHistoryDatabaseListener(SearchHistoryDatabaseListener listener) {
         listeners.add(listener);
         listener.onUpdate(getRepository().getSearchHistories());

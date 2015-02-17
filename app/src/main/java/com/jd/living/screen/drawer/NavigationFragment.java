@@ -3,18 +3,23 @@ package com.jd.living.screen.drawer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -82,6 +87,7 @@ public class NavigationFragment extends Fragment {
     }
 
     public void onUpdate(int position) {
+        Log.d("", "onUpdate " + position);
         onUpdate(position, adapter.getItem(position));
     }
 
@@ -99,7 +105,6 @@ public class NavigationFragment extends Fragment {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
         mDrawerToggle.syncState();
     }
 
@@ -108,7 +113,7 @@ public class NavigationFragment extends Fragment {
     }
 
     private DrawerMenuAdapter getDrawerMenuAdapter() {
-        if (adapter == null ) {
+        if (adapter == null) {
             adapter = new DrawerMenuAdapter(getActivity());
             adapter.setDrawerMenuListener(new DrawerMenuAdapter.DrawerMenuListener() {
                 @Override
@@ -148,7 +153,6 @@ public class NavigationFragment extends Fragment {
         oldItemId = position;
         mDrawerLayout.closeDrawer(mDrawerView);
     }
-
 
     private class Toggle extends ActionBarDrawerToggle {
         public Toggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes) {

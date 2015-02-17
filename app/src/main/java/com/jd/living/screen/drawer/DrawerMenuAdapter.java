@@ -34,14 +34,15 @@ public class DrawerMenuAdapter extends AbstractListAdapter<DrawerMenuAdapter.Dra
         items = new ArrayList<>();
         items.add(new DrawerMenuItem(0, R.string.app_name, 1));
         items.add(new DrawerMenuItem(R.drawable.drawer_menu_search_result, R.string.search_result, 2));
-        items.add(new DrawerMenuItem(R.drawable.drawer_menu_new_search, R.string.new_search, 3));
+        items.add(new DrawerMenuItem(R.drawable.ic_history, R.string.searches, 3));
+        items.add(new DrawerMenuItem(R.drawable.ic_favorite, R.string.favorites, 4));
+        items.add(new DrawerMenuItem(R.string.settings, 5));
+        items.add(new DrawerMenuItem(R.string.help, 6));
+
         //items.add(new DrawerMenuItem(R.drawable.ic_menu_mapmode, R.string.map_result));
-        items.add(new DrawerMenuItem(R.drawable.ic_history, R.string.searches, 4));
-        items.add(new DrawerMenuItem(R.drawable.ic_favorite, R.string.favorites, 5));
         //items.add(new DrawerMenuItem(R.drawable.action_search, R.string.detail_view));
         //items.add(new DrawerMenuItem(R.drawable.ic_menu_camera, R.string.images));
-        items.add(new DrawerMenuItem(R.string.settings, 6));
-        items.add(new DrawerMenuItem(R.string.help, 7));
+
 
         setData(items);
         setHasStableIds(true);

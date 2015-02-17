@@ -1,10 +1,12 @@
 package com.jd.living.activity.search;
 
+import android.content.Intent;
+import android.util.Log;
+
 import com.jd.living.R;
 import com.jd.living.Search;
-import com.jd.living.activity.details.SearchDetailsFragment_;
+import com.jd.living.activity.details.search.SearchActivity_;
 import com.jd.living.database.DatabaseHelper;
-import com.jd.living.help.NavigationDrawerActivity;
 import com.jd.living.model.Listing;
 
 import org.androidannotations.annotations.EFragment;
@@ -37,6 +39,7 @@ public class NewSearch extends SearchList implements DatabaseHelper.SearchDataba
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("", "NewSearch.onResume");
         database.addDatabaseListener(this);
     }
 
@@ -49,7 +52,9 @@ public class NewSearch extends SearchList implements DatabaseHelper.SearchDataba
     @ItemClick
     void listItemClicked(Listing listing) {
         database.setCurrentId(listing.getBooliId(), getDataBaseState());
-        ((NavigationDrawerActivity) getActivity()).updateFragment(new SearchDetailsFragment_());
+        Intent intent = new Intent(getActivity(), SearchActivity_.class);
+
+        getActivity().startActivityFromFragment(this, intent, 0);
     }
 
     @Override
@@ -66,11 +71,6 @@ public class NewSearch extends SearchList implements DatabaseHelper.SearchDataba
     @Override
     public void onFavoriteUpdated() {
         searchListAdapter.update();
-    }
-
-    @Override
-    public void onDetailsRequested(int booliId) {
-
     }
 }
 

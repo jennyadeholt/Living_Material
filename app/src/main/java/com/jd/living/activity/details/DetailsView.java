@@ -2,7 +2,9 @@ package com.jd.living.activity.details;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jd.living.R;
-import com.jd.living.database.BooliDatabase;
 import com.jd.living.database.DatabaseHelper;
-import com.jd.living.database.SearchDatabase;
 import com.jd.living.model.Listing;
 import com.jd.living.util.StringUtil;
 
-import org.androidannotations.annotations.AfterInject;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
@@ -30,7 +29,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 @EFragment
-public abstract class DetailsFragment extends Fragment {
+public abstract class DetailsView extends Fragment {
 
     @ViewById
     protected TableLayout tableLayout;
@@ -57,35 +56,28 @@ public abstract class DetailsFragment extends Fragment {
     protected ImageView favorite;
 
     @Bean
-    DatabaseHelper database;
+    protected DatabaseHelper database;
 
     protected Listing listing;
 
     private int id;
 
 
+    protected abstract DatabaseHelper.DatabaseState getDataBaseState();
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_details, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.details, null);
     }
 
     @AfterViews
     public void init() {
-        listing = database.getCurrentListing(getDataBaseState());
+        id = getArguments() != null ? getArguments().getInt("objectIndex") : 1;
+        listing = database.getListingBasedOnLocation(id, getDataBaseState());
 
         if (listing != null) {
-            id = listing.getBooliId();
-            getActivity().setTitle(listing.getAddress());
             update();
         }
-    }
-
-    protected abstract DatabaseHelper.DatabaseState getDataBaseState();
-
-    private void update() {
-        setupDetails();
-        updateFavorite(false);
-        getImage();
     }
 
     protected Listing getListing() {
@@ -107,7 +99,6 @@ public abstract class DetailsFragment extends Fragment {
                 }
                 database.getFavoriteDatabase().updateFavorite(listing);
 
-
                 Toast.makeText(getActivity(), resText, Toast.LENGTH_SHORT).show();
             } else if (isFavorite) {
                 resId = R.drawable.btn_rating_star_on_normal_holo_light;
@@ -124,6 +115,8 @@ public abstract class DetailsFragment extends Fragment {
         address.setText(listing.getAddress());
         area.setText(listing.getArea());
         type.setText(listing.getObjectType());
+        Log.d("3", "ListPrice " + listing.getAddress() + " " + listing.getListPrice());
+
         if (!listing.getListPrice().equals("0")) {
             price.setText(listing.getListPrice());
         }
@@ -190,5 +183,11 @@ public abstract class DetailsFragment extends Fragment {
         if (drawable != null) {
             thumbnail.setImageDrawable(drawable);
         }
+    }
+
+    private void update() {
+        setupDetails();
+        updateFavorite(false);
+        getImage();
     }
 }
