@@ -27,14 +27,15 @@
 
         <LinearLayout
             android:layout_width="fill_parent"
+            android:gravity="center_vertical"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/favorite"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginRight="3dp"
-                android:src="@drawable/btn_star_off_disabled_focused_holo_light" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/favorite_drawable" />
 
             <TextView
                 android:id="@+id/address"

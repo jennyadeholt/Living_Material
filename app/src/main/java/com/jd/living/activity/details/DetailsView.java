@@ -1,6 +1,8 @@
 package com.jd.living.activity.details;
 
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,14 +21,16 @@ import com.jd.living.model.Listing;
 import com.jd.living.util.StringUtil;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 @EFragment
 public abstract class DetailsView extends Fragment {
@@ -50,7 +54,7 @@ public abstract class DetailsView extends Fragment {
     protected TextView price;
 
     @ViewById
-    protected ImageView thumbnail;
+    protected ImageView topImage;
 
     @ViewById
     protected ImageView favorite;
@@ -86,7 +90,7 @@ public abstract class DetailsView extends Fragment {
 
     protected void updateFavorite(boolean onTouch) {
         boolean isFavorite = database.getFavoriteDatabase().isFavorite(listing);
-        int resId = R.drawable.btn_star_off_disabled_focused_holo_light;
+        int resId = R.drawable.favorite_drawable;
 
         if (listing.isSold()) {
             favorite.setVisibility(View.GONE);
@@ -101,7 +105,7 @@ public abstract class DetailsView extends Fragment {
 
                 Toast.makeText(getActivity(), resText, Toast.LENGTH_SHORT).show();
             } else if (isFavorite) {
-                resId = R.drawable.btn_rating_star_on_normal_holo_light;
+                resId = R.drawable.favorite_drawable_selected;
             }
             favorite.setVisibility(View.VISIBLE);
             favorite.setImageResource(resId);
@@ -115,7 +119,6 @@ public abstract class DetailsView extends Fragment {
         address.setText(listing.getAddress());
         area.setText(listing.getArea());
         type.setText(listing.getObjectType());
-        Log.d("3", "ListPrice " + listing.getAddress() + " " + listing.getListPrice());
 
         if (!listing.getListPrice().equals("0")) {
             price.setText(listing.getListPrice());
@@ -164,30 +167,56 @@ public abstract class DetailsView extends Fragment {
         tableLayout.addView(row);
     }
 
-    @Background
-    public void getImage() {
-        Drawable drawable = null;
-        try {
-            InputStream is = (InputStream) new URL(listing.getImageUrl()).getContent();
-            drawable = Drawable.createFromStream(is, "src name");
-            is.close();
-        } catch (Exception e) {
-            System.out.println("Exc=" + e);
-        }
-
-        setImage(drawable);
-    }
-
-    @UiThread
-    public void setImage(Drawable drawable) {
-        if (drawable != null) {
-            thumbnail.setImageDrawable(drawable);
-        }
-    }
-
     private void update() {
         setupDetails();
         updateFavorite(false);
-        getImage();
+        new FetchWebImages().execute();
+    }
+
+    private class FetchWebImages extends AsyncTask<Void, Void, Void> {
+        Bitmap bitmap;
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+
+                Document document = Jsoup.connect("http://www.booli.se/redirect/all-images?id=" + listing.getBooliId()).get();
+
+                Elements images = document.select("img[src]");
+
+                Log.d("", listing.getAddress() + " http://www.booli.se/redirect/all-images?id=" + listing.getBooliId());
+                for (Element image : images) {
+                    String url = image.attr("src");
+                    if ((url.startsWith("http://") || url.startsWith("https://")) &&
+                            !url.contains("logo") &&
+                            !url.contains("static") &&
+                            !url.contains("icons") &&
+                            !url.contains("images/u") &&
+                            !url.contains("facebook") &&
+                            !url.contains("sigill")) {
+                        Log.d("", "Valid URL: " + url);
+                        InputStream input = new java.net.URL(url).openStream();
+                        bitmap = BitmapFactory.decodeStream(input);
+                        input.close();
+                        break;
+                    } else {
+                        Log.d("", "Thrown URL: " + url);
+                    }
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            if (bitmap != null) {
+                topImage.setImageBitmap(bitmap);
+            }
+        }
     }
 }

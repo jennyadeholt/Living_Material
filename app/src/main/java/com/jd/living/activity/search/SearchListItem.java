@@ -96,7 +96,7 @@ public class SearchListItem extends LinearLayout {
             if (onTouch) {
                 database.updateFavorite(listing);
             } else if (isFavorite) {
-                resId = R.drawable.btn_rating_star_on_normal_holo_light;
+                resId = R.drawable.favorite_drawable_selected;
             }
             favorite.setVisibility(resId == 0 ? View.GONE : View.VISIBLE);
             favorite.setImageResource(resId);
