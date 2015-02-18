@@ -8,10 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.jd.living.R;
-import com.jd.living.activity.details.favorite.FavoriteView;
 import com.jd.living.activity.details.favorite.FavoriteView_;
 import com.jd.living.activity.details.search.SearchView_;
 import com.jd.living.database.DatabaseHelper;
@@ -61,7 +59,7 @@ public abstract class DetailsActivity extends ActionBarActivity {
 
             }
         });
-        pager.setOffscreenPageLimit(1);
+        pager.setOffscreenPageLimit(4);
     }
 
     @Override

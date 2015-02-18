@@ -3,9 +3,7 @@ package com.jd.living.activity.search;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,7 +22,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.lang.reflect.Field;
 import java.util.List;
-
 
 @EFragment
 public abstract class SearchList extends ListFragment {
@@ -50,46 +47,24 @@ public abstract class SearchList extends ListFragment {
     public void init() {
         setListAdapter(searchListAdapter);
         registerForContextMenu(getListView());
+
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Listing listing = database.getListingBasedOnLocation(position, getDataBaseState());
+                if (listing != null) {
+                    favoriteDatabase.updateFavorite(listing);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.list, container, false);
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        if (v.getId() == android.R.id.list) {
-            Listing listing = database.getListingBasedOnLocation((
-                    (AdapterView.AdapterContextMenuInfo) menuInfo).position, getDataBaseState());
-            getActivity().getMenuInflater().inflate(R.menu.search_list_menu, menu);
-            menu.setHeaderTitle(listing.getAddress());
-
-            if (favoriteDatabase.isFavorite(listing)) {
-                menu.removeItem(R.id.action_add);
-            } else {
-                menu.removeItem(R.id.action_remove);
-            }
-        }
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        int position = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
-        Listing listing = database.getListingBasedOnLocation(position, getDataBaseState());
-
-        switch (item.getItemId()) {
-            case R.id.action_add:
-            case R.id.action_remove:
-                favoriteDatabase.updateFavorite(listing);
-                return true;
-            case R.id.action_view:
-                database.setCurrentId(listing.getBooliId(), getDataBaseState());
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
     }
 
     @Override

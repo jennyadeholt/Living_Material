@@ -34,6 +34,7 @@
             <TextView
                 android:id="@+id/address"
                 style="@style/Header"
+                android:textStyle="bold"
                 android:layout_alignParentBottom="true"
                 android:ellipsize="end"
                 android:paddingBottom="16dp"

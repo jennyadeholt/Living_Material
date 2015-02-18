@@ -170,7 +170,17 @@ public abstract class DetailsView extends Fragment {
     private void update() {
         setupDetails();
         updateFavorite(false);
-        new FetchWebImages().execute();
+        if (listing.getTopImage() == null) {
+            new FetchWebImages().execute();
+        } else {
+            setImage(listing.getTopImage());
+        }
+    }
+
+    private void setImage(Bitmap bitmap) {
+        if (bitmap != null) {
+            topImage.setImageBitmap(bitmap);
+        }
     }
 
     private class FetchWebImages extends AsyncTask<Void, Void, Void> {
@@ -181,12 +191,10 @@ public abstract class DetailsView extends Fragment {
         protected Void doInBackground(Void... params) {
 
             try {
-
-                Document document = Jsoup.connect("http://www.booli.se/redirect/all-images?id=" + listing.getBooliId()).get();
-
+                String booliUrl = "http://www.booli.se/redirect/all-images?id=" + listing.getBooliId();
+                Document document = Jsoup.connect(booliUrl).get();
                 Elements images = document.select("img[src]");
 
-                Log.d("", listing.getAddress() + " http://www.booli.se/redirect/all-images?id=" + listing.getBooliId());
                 for (Element image : images) {
                     String url = image.attr("src");
                     if ((url.startsWith("http://") || url.startsWith("https://")) &&
@@ -201,8 +209,6 @@ public abstract class DetailsView extends Fragment {
                         bitmap = BitmapFactory.decodeStream(input);
                         input.close();
                         break;
-                    } else {
-                        Log.d("", "Thrown URL: " + url);
                     }
                 }
 
@@ -214,9 +220,8 @@ public abstract class DetailsView extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            if (bitmap != null) {
-                topImage.setImageBitmap(bitmap);
-            }
+            listing.setTopImage(bitmap);
+            setImage(bitmap);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.jd.living.model;
 
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 
 import com.jd.living.util.StringUtil;
@@ -21,6 +22,8 @@ public class Listing {
     protected String url;
     protected String soldDate;
     protected double soldPrice;
+
+    private Bitmap topImage;
 
     public String getSoldDate() {
         return soldDate;
@@ -118,6 +121,14 @@ public class Listing {
 
     public String getImageUrl() {
         return "http://api.bcdn.se/cache/primary_"+ getBooliId()+ "_140x94.jpg";
+    }
+
+    public void setTopImage(Bitmap topImage) {
+        this.topImage = topImage;
+    }
+
+    public Bitmap getTopImage() {
+        return topImage;
     }
 
     @Override
