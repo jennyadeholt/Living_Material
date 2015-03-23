@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import com.jd.living.activity.settings.SearchPreferenceKey;
+import com.jd.living.screen.settings.SearchPreferenceKey;
 import com.jd.living.model.ormlite.SearchHistory;
 import com.jd.living.util.StringUtil;
 

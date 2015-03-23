@@ -142,6 +142,10 @@ public class NavigationFragment extends Fragment {
         if (mDrawerMenuListener != null) {
             mDrawerMenuListener.onMenuItemClicked(position, item);
         }
+        updateView(position);
+    }
+
+    private void updateView(int position) {
         RecyclerView.ViewHolder oldViewHolder = mRecyclerView.findViewHolderForPosition(oldItemId);
         if (oldViewHolder != null) {
             oldViewHolder.itemView.setSelected(false);

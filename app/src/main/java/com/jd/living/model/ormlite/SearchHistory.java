@@ -86,6 +86,10 @@ public class SearchHistory implements Comparable<SearchHistory> {
         return maxAmount;
     }
 
+    public String getMaxRent() {
+        return maxRent;
+    }
+
     public String getProduction() {
         return production;
     }

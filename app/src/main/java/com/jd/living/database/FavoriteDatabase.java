@@ -9,6 +9,9 @@ import com.jd.living.model.ormlite.Favorite;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @EBean(scope = EBean.Scope.Singleton)
 public class FavoriteDatabase extends BooliDatabase {
 
@@ -48,20 +51,25 @@ public class FavoriteDatabase extends BooliDatabase {
         }
     }
 
+    public void deleteAllFavorites() {
+        List<Listing> favorites = getResult();
+        for (Listing favorite : favorites) {
+            getRepository().deleteFavorite(favorite.getBooliId());
+        }
+
+        setResult(new ArrayList<Listing>());
+        notifyListeners();
+
+    }
+
     private void addFavorite(Listing listing) {
         getRepository().addFavorite(new Favorite(listing.getBooliId()));
     }
 
+
     private void removeFavorite(Listing listing) {
         listing = getListing(listing.getBooliId());
-        /*
-        for (Listing l : getResult()) {
-            if (l.getBooliId() == listing.getBooliId()) {
-                listing = l;
-                break;
-            }
-        }
-        */
+
         getResult().remove(listing);
         getRepository().deleteFavorite(listing.getBooliId());
         notifyListeners();

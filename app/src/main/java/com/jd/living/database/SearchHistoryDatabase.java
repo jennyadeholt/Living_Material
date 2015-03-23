@@ -53,9 +53,14 @@ public class SearchHistoryDatabase implements SearchDatabase.SearchHistoryListen
             getRepository().addSearchHistory(searchHistory);
         }
 
-        for (SearchHistoryDatabaseListener listener : listeners) {
+        List<SearchHistoryDatabaseListener> b = new ArrayList<>(listeners);
+        for (SearchHistoryDatabaseListener listener : b) {
             listener.onUpdate(getRepository().getSearchHistories());
         }
+    }
+
+    public SearchHistory getSearchHistory(int id) {
+        return getRepository().getSearchHistory(id);
     }
 
     public void registerSearchHistoryDatabaseListener(SearchHistoryDatabaseListener listener) {

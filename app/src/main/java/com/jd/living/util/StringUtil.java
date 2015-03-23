@@ -2,8 +2,12 @@ package com.jd.living.util;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.TextureView;
 
 import com.jd.living.R;
+
+import org.springframework.util.StringUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -12,7 +16,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class StringUtil {
 
@@ -144,5 +150,24 @@ public class StringUtil {
         }
 
         return result;
+    }
+
+    public static String getBuildingTypes(Context context, String[] selected) {
+        String text = context.getString(R.string.building_type_none);
+
+        if (selected != null && selected.length != 0) {
+            text = "";
+            String[] names = context.getResources().getStringArray(R.array.building);
+            String[] types = context.getResources().getStringArray(R.array.building_types);
+            for (String s : selected) {
+                String temp = getText(s, names, types);
+                if (!TextUtils.isEmpty(temp)) {
+                    text = text + temp + ", ";
+                }
+            }
+
+            text = TextUtils.isEmpty(text) ? context.getString(R.string.building_type_none) : text.substring(0, text.length() - 2);
+        }
+        return text;
     }
 }

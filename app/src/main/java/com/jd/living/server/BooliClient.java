@@ -15,14 +15,14 @@ import org.springframework.web.client.RestTemplate;
 @Accept(MediaType.APPLICATION_JSON)
 public interface BooliClient {
 
-    @Get("/listings?q={search}&maxListPrice={maxA}&minListPrice={minA}&minRooms={minR}&maxRooms={maxR}&objectType={objectType}&isNewConstruction={isNew}&&maxRent={rent}&limit={limit}&" + BooliServer.common)
+    @Get("/listings?q={search}&maxListPrice={maxA}&minListPrice={minA}&minRooms={minR}&maxRooms={maxR}&objectType={objectType}&isNewConstruction={isNew}&&maxRent={rent}&limit={limit}&minPublished={minPublished}&" + BooliServer.common)
     @Accept(MediaType.APPLICATION_JSON)
     ResponseEntity<ListingsResult> getListings(String search, String callerId, long time,
                                                String unique, String hash,
                                                String minR, String maxR,
                                                String objectType,
                                                String minA, String maxA,
-                                               String isNew, String rent, int limit);
+                                               String isNew, String rent, int limit, String minPublished);
 
     @Get("/listings/{booliId}?" + BooliServer.common)
     @Accept(MediaType.APPLICATION_JSON)

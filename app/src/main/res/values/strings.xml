@@ -159,7 +159,7 @@
     <string name="action_delete_all_favorite">Delete all favorites</string>
     <string name="action_delete_all_history">Delete all history</string>
     <string name="action_delete_favorite">Delete favorite</string>
-    <string name="action_save_search">Save search</string>
+    <string name="action_save_search">Watch</string>
     <string name="building">View all</string>
     <string name="building_new">View only new productions</string>
     <string name="building_old">Don´t show new productions</string>

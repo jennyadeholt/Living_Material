@@ -73,7 +73,7 @@
 
     <string name="dialog_update_search_title">Updatera sökning</string>
     <string name="dialog_update_search_text">Kör sökningen en gång till?</string>
-    <string name="preferences_launch_search">Sök</string>
+    <string name="preferences_launch_search">@string/search</string>
     <string name="preferences_clear_search">Rensa</string>
     <string name="action_delete_favorite">Rensa favorit</string>
     <string name="action_delete_all_favorite">Rensa alla favoriter</string>
@@ -83,6 +83,9 @@
     <string name="action_save_search">Bevaka</string>
 
     <string name="days_available_zero">Idag</string>
+
+    <string name="search">Sök</string>
+    <string name="watch">Bevaka</string>
 
     <string-array name="sort_strings">
         <item>Publiserad</item>

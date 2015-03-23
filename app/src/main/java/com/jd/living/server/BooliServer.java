@@ -56,7 +56,34 @@ public class BooliServer {
                         search.getMaxAmount(),
                         search.getProduction(),
                         search.getMaxRent(),
-                        500
+                        500,
+                        ""
+                )
+                .getBody();
+
+        notifyListeners(BooliDatabase.ActionCode.LISTINGS, result);
+    }
+
+    @Background
+    public void getCoverage(Search search) {
+        AuthStore authStore = new AuthStore();
+
+        ListingsResult result = restClient.
+                getListings(
+                        search.getLocation(),
+                        authStore.getCallerId(),
+                        authStore.getTime(),
+                        authStore.getUnique(),
+                        authStore.getHash(),
+                        search.getMinRooms(),
+                        search.getMaxRooms(true),
+                        search.getTypes(),
+                        search.getMinAmount(),
+                        search.getMaxAmount(),
+                        search.getProduction(),
+                        search.getMaxRent(),
+                        500,
+                        ""
                 )
                 .getBody();
 

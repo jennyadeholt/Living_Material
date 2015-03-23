@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jd.living.R;
-import com.jd.living.help.AbstractListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
