@@ -66,7 +66,6 @@ public class FavoriteDatabase extends BooliDatabase {
         getRepository().addFavorite(new Favorite(listing.getBooliId()));
     }
 
-
     private void removeFavorite(Listing listing) {
         listing = getListing(listing.getBooliId());
 

@@ -94,7 +94,8 @@ public class SearchListItem extends LinearLayout {
         } else {
             if (onTouch) {
                 database.updateFavorite(listing);
-            } else if (isFavorite) {
+            }
+            if (isFavorite) {
                 resId = R.drawable.favorite_drawable_selected;
             }
             favorite.setVisibility(resId == 0 ? View.GONE : View.VISIBLE);

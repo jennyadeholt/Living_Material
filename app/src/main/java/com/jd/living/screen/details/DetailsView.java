@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.jd.living.R;
 import com.jd.living.database.DatabaseHelper;
+import com.jd.living.database.DatabaseHelper.FavoriteDatabaseListener;
 import com.jd.living.model.Listing;
 import com.jd.living.util.StringUtil;
 
@@ -26,6 +28,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.UiThread;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,9 +36,10 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 @EFragment
-public abstract class DetailsView extends Fragment {
+public abstract class DetailsView extends Fragment implements FavoriteDatabaseListener {
 
     @ViewById
     protected TableLayout tableLayout;
@@ -69,6 +73,8 @@ public abstract class DetailsView extends Fragment {
     private int id;
     private String imagesUrl;
 
+    private boolean onTouch = false;
+
 
     protected abstract DatabaseHelper.DatabaseState getDataBaseState();
 
@@ -81,6 +87,7 @@ public abstract class DetailsView extends Fragment {
     public void init() {
         id = getArguments() != null ? getArguments().getInt("objectIndex") : 1;
         listing = database.getListingBasedOnLocation(id, getDataBaseState());
+        database.addDatabaseListener(this);
 
         if (listing != null) {
             imagesUrl = "http://www.booli.se/redirect/all-images?id=" + listing.getBooliId();
@@ -94,14 +101,28 @@ public abstract class DetailsView extends Fragment {
                     startActivity(i);
                 }
             });
+
+            favorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onTouch = true;
+                    database.getFavoriteDatabase().updateFavorite(listing);
+                }
+            });
         }
+    }
+
+    @Override
+    public void onUpdate(List<Listing> result) {
+        updateFavorite();
     }
 
     protected Listing getListing() {
         return listing;
     }
 
-    protected void updateFavorite(boolean onTouch) {
+    @UiThread
+    protected void updateFavorite() {
         boolean isFavorite = database.getFavoriteDatabase().isFavorite(listing);
         int resId = R.drawable.favorite_drawable;
 
@@ -112,17 +133,18 @@ public abstract class DetailsView extends Fragment {
                 int resText = R.string.toast_removed_favorite;
                 if (!isFavorite) {
                     resText = R.string.toast_added_favorite;
-                    resId = R.drawable.btn_rating_star_on_normal_holo_light;
+                    //resId = R.drawable.btn_rating_star_on_normal_holo_light;
                 }
-                database.getFavoriteDatabase().updateFavorite(listing);
-
                 Toast.makeText(getActivity(), resText, Toast.LENGTH_SHORT).show();
-            } else if (isFavorite) {
+            }
+            if (isFavorite) {
                 resId = R.drawable.favorite_drawable_selected;
             }
             favorite.setVisibility(View.VISIBLE);
             favorite.setImageResource(resId);
         }
+
+        onTouch = false;
     }
 
     protected void setupDetails() {
@@ -182,7 +204,7 @@ public abstract class DetailsView extends Fragment {
 
     private void update() {
         setupDetails();
-        updateFavorite(false);
+        updateFavorite();
         if (listing.getTopImage() == null) {
             new FetchWebImages().execute();
         } else {
@@ -196,13 +218,13 @@ public abstract class DetailsView extends Fragment {
         }
     }
 
-    private class FetchWebImages extends AsyncTask<Void, Void, Void> {
+    private class FetchWebImages extends AsyncTask<Void, Void, Bitmap> {
         Bitmap bitmap;
 
 
         @Override
-        protected Void doInBackground(Void... params) {
-
+        protected Bitmap doInBackground(Void... params) {
+            Bitmap result = null;
             try {
                 Document document = Jsoup.connect(imagesUrl).get();
                 Elements images = document.select("img[src]");
@@ -218,7 +240,7 @@ public abstract class DetailsView extends Fragment {
                             !url.contains("sigill")) {
                         Log.d("", "Valid URL: " + url);
                         InputStream input = new java.net.URL(url).openStream();
-                        bitmap = BitmapFactory.decodeStream(input);
+                        result = BitmapFactory.decodeStream(input);
                         input.close();
                         break;
                     }
@@ -227,11 +249,14 @@ public abstract class DetailsView extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+            return result;
         }
 
         @Override
-        protected void onPostExecute(Void result) {
+        protected void onPostExecute(Bitmap result) {
+            if (result != null) {
+                bitmap = result;
+            }
             listing.setTopImage(bitmap);
             setImage(bitmap);
         }
